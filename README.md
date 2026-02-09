@@ -285,3 +285,278 @@ Based on Impact Scores, the system recommends:
 ---
 
 *The goal isn't to build the most sophisticated model — it's to give sales leaders a clear, trustworthy answer to "What should I focus on to improve win rate?"*
+
+
+# Part 4: Mini System Design – Sales Insight & Alert System
+
+## Overview
+
+If SkyGeni were to productize this, here's what a lightweight **Sales Insight & Alert System** would look like.
+
+---
+
+## 1. High-Level Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         SALES INSIGHT & ALERT SYSTEM                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   CRM       │     │   DATA      │     │  ANALYTICS  │     │   ALERT     │
+│   SOURCE    │────▶│   LAYER     │────▶│   ENGINE    │────▶│   DELIVERY  │
+│             │     │             │     │             │     │             │
+│ • Salesforce│     │ • ETL Jobs  │     │ • Driver    │     │ • Slack     │
+│ • HubSpot   │     │ • Data Lake │     │   Scorecard │     │ • Email     │
+│ • Pipedrive │     │ • Warehouse │     │ • Anomaly   │     │ • Dashboard │
+│             │     │             │     │   Detection │     │ • Mobile    │
+└─────────────┘     └─────────────┘     └─────────────┘     └─────────────┘
+       │                   │                   │                   │
+       └───────────────────┴───────────────────┴───────────────────┘
+                                    │
+                           ┌───────▼────────┐
+                           │   FEEDBACK     │
+                           │   LOOP         │
+                           │                │
+                           │ • Alert useful?│
+                           │ • Action taken?│
+                           │ • Improve model│
+                           └────────────────┘
+```
+
+### Components:
+
+| Component | Purpose | Technology |
+|-----------|---------|------------|
+| **CRM Source** | Where sales data lives | Salesforce, HubSpot API |
+| **Data Layer** | Clean, transform, store | Python/dbt + PostgreSQL |
+| **Analytics Engine** | Calculate metrics, detect issues | Python + SQL |
+| **Alert Delivery** | Notify the right people | Slack API, Email, Dashboard |
+| **Feedback Loop** | Learn from user actions | Simple rating system |
+
+---
+
+## 2. Data Flow
+
+### Step-by-Step:
+
+```
+1. EXTRACT (Every 6 hours)
+   CRM API → Raw deal data (stage, amount, owner, dates)
+   
+2. TRANSFORM (After extract)
+   • Calculate win rates by segment
+   • Compute sales cycle metrics
+   • Compare to baseline (rolling 90-day average)
+   
+3. ANALYZE (Daily at 6 AM)
+   • Run Driver Scorecard analysis
+   • Check for anomalies (sudden drops/spikes)
+   • Identify at-risk deals
+   
+4. ALERT (When thresholds crossed)
+   • Filter by severity (Critical / Warning / Info)
+   • Route to appropriate recipient
+   • Include context + suggested action
+   
+5. FEEDBACK (User clicks)
+   • "Was this helpful?" → Yes/No
+   • "Action taken?" → Track outcomes
+   • Improve alert relevance over time
+```
+
+### Data Model (Simplified):
+
+```
+deals
+├── deal_id
+├── stage
+├── amount
+├── owner_id
+├── created_date
+├── closed_date
+├── is_won
+└── lead_source
+
+daily_metrics
+├── date
+├── segment (lead_source, industry, rep, etc.)
+├── win_rate
+├── avg_cycle_days
+├── deal_count
+└── baseline_win_rate (90-day rolling)
+
+alerts
+├── alert_id
+├── type (anomaly, driver_change, stall)
+├── severity (critical, warning, info)
+├── segment
+├── message
+├── suggested_action
+├── recipient
+├── was_helpful (user feedback)
+└── action_taken
+```
+
+---
+
+## 3. Example Alerts & Insights
+
+### Alert Type 1: Win Rate Drop Alert
+
+```
+🔴 CRITICAL ALERT: Win Rate Drop Detected
+
+WHAT: Partner channel win rate dropped 3.2pp this week
+FROM: 44.5% (last week) → 41.3% (this week)
+IMPACT: ~$85K pipeline at risk if trend continues
+
+SUGGESTED ACTION:
+→ Review last 5 Partner deals lost this week
+→ Schedule call with top 2 partners to discuss lead quality
+
+[View Details] [Dismiss] [Was this helpful? 👍 👎]
+```
+
+### Alert Type 2: Stalled Deal Alert
+
+```
+🟡 WARNING: 3 Large Deals Stalled
+
+WHAT: 3 deals over $40K have been in "Proposal" for 15+ days
+DEALS:
+• Acme Corp ($52K) - rep_12 - 18 days stuck
+• Beta Inc ($45K) - rep_7 - 16 days stuck  
+• Gamma LLC ($48K) - rep_3 - 15 days stuck
+
+SUGGESTED ACTION:
+→ Review pricing objections in these accounts
+→ Consider executive sponsor outreach
+
+[View Deals] [Snooze 3 days] [Was this helpful? 👍 👎]
+```
+
+### Alert Type 3: Rep Performance Alert
+
+```
+🔴 CRITICAL: Rep Performance Gap Widening
+
+WHAT: rep_1 win rate dropped to 32% (team avg: 45.2%)
+TREND: 3rd consecutive week of decline
+DEALS: 0 wins in last 8 closed opportunities
+
+SUGGESTED ACTION:
+→ Schedule 1:1 coaching session
+→ Review recent loss reasons
+→ Consider deal shadowing with rep_12
+
+[View Rep Details] [Schedule Meeting] [Was this helpful? 👍 👎]
+```
+
+### Alert Type 4: Positive Insight
+
+```
+🟢 INSIGHT: Tech Industry Outperforming
+
+WHAT: Tech industry win rate hit 52% (vs 45% overall)
+TREND: 3rd consecutive week above 50%
+VOLUME: 28 deals closed, 15 won
+
+SUGGESTED ACTION:
+→ Consider increasing marketing spend on Tech
+→ Document winning patterns from Tech deals
+
+[View Analysis] [Share with Team] [Was this helpful? 👍 👎]
+```
+
+---
+
+## 4. How Often It Runs
+
+| Process | Frequency | Why |
+|---------|-----------|-----|
+| **Data Sync** | Every 6 hours | Balance freshness vs. API limits |
+| **Metric Calculation** | Daily (6 AM) | Ready before sales standup |
+| **Driver Scorecard** | Weekly (Monday 7 AM) | Strategic, not daily noise |
+| **Anomaly Detection** | Daily | Catch sudden changes fast |
+| **Stalled Deal Check** | Daily | Time-sensitive |
+| **Rep Performance** | Weekly | Avoid over-alerting |
+
+### Alert Delivery Schedule:
+
+```
+CRITICAL alerts  → Immediate (Slack + Email)
+WARNING alerts   → Daily digest (Email at 8 AM)
+INFO insights    → Weekly summary (Monday email)
+```
+
+---
+
+## 5. Failure Cases & Limitations
+
+### Technical Failures:
+
+| Failure | Impact | Mitigation |
+|---------|--------|------------|
+| **CRM API down** | No new data | Retry with backoff; alert ops team after 3 failures |
+| **Stale data** | Wrong metrics | Show "last updated" timestamp; warn if >12 hours old |
+| **Duplicate deals** | Inflated counts | Dedupe by deal_id in ETL |
+| **Missing fields** | Incomplete analysis | Default values; flag data quality issues |
+
+### Analytical Limitations:
+
+| Limitation | Example | How We Handle It |
+|------------|---------|------------------|
+| **Small sample size** | New rep with 3 deals | Require minimum 10 deals before alerting |
+| **Seasonality** | Q4 always higher | Use year-over-year comparison in Q4 |
+| **External factors** | Competitor launched | Add manual "context note" feature |
+| **Correlation ≠ causation** | Partner leads worse, but why? | Alerts suggest investigation, not blame |
+| **Lagging indicator** | Win rate reflects past | Add leading indicators (stage velocity) |
+
+### Business Limitations:
+
+| Limitation | Reality |
+|------------|---------|
+| **Alert fatigue** | Too many alerts = ignored. Throttle to max 3/day. |
+| **Trust building** | Users won't act until system proves accuracy. Start with low-risk insights. |
+| **Action gap** | Alert is useless if no clear action. Always include "Suggested Action." |
+| **One-size-fits-all** | CRO needs different alerts than rep. Role-based filtering. |
+
+---
+
+## 6. Productization: Key Features for SkyGeni
+
+### MVP Features:
+
+| Feature | Description |
+|---------|-------------|
+| **Driver Dashboard** | Visual scorecard of what's helping/hurting win rate |
+| **Smart Alerts** | Role-based, severity-filtered, actionable |
+| **Drill-down** | Click any metric → see underlying deals |
+| **Feedback Loop** | "Was this helpful?" improves relevance |
+
+### Future Features:
+
+| Feature | Value |
+|---------|-------|
+| **Predictive Alerts** | "This deal is 70% likely to stall" |
+| **Benchmark Comparison** | "Your win rate vs. similar companies" |
+| **Natural Language Insights** | "Win rate dropped because Partner leads are 3.7pp worse" |
+| **Slack Bot** | "Hey SkyBot, why is our win rate down?" |
+
+---
+
+## Summary
+
+| Aspect | Design Decision |
+|--------|-----------------|
+| **Architecture** | Simple 4-layer: Source → Data → Analytics → Alerts |
+| **Data Flow** | Extract every 6h → Transform → Analyze daily → Alert on threshold |
+| **Alert Types** | Win rate drops, stalled deals, rep performance, positive insights |
+| **Frequency** | Critical = immediate, Warning = daily, Info = weekly |
+| **Failure Handling** | Retries, staleness warnings, minimum sample sizes |
+| **Key Differentiator** | Every alert includes "Suggested Action" — not just data, but guidance |
+
+---
+
+*The goal: A system that tells sales leaders **what's wrong**, **why it matters**, and **what to do about it** — before they have to ask.*
