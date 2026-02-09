@@ -24,3 +24,47 @@
 *   **The data is correct:** We assume the sales team actually updates the system correctly when they win or lose a deal.
 *   **Everyone uses the same rules:** We assume that a "Demo" or "Price Proposal" means the same thing to every sales rep in every office.
 *   **No huge outside changes:** We assume nothing crazy happened in the world (like a 50% price increase or a huge new competitor) that would suddenly make our old data useless.
+
+
+# Part 2 – Data Exploration & Insights
+
+📋 Business Insights Summary (Recruiter-Ready)
+Insight 1: Partner Lead Source is Underperforming and Getting Worse
+What We Found: Partners send 25% of deals but convert at lower rates. The gap widened from -2.0pp to -3.7pp.
+
+Why It Matters:
+
+Quarter of pipeline is underperforming
+~$350K-$500K in lost potential revenue per quarter
+Sales reps wasting time on low-quality leads
+Actions It Could Drive:
+
+Partner quality audit → Identify which partners send good leads
+Partner training on ICP
+Tiered partner system with incentives
+Insight 2: Large Deals Are Taking Longer and Converting at Lower Rates
+What We Found: Large deals ($30-60K) have the LOWEST win rate at 42.9%, despite Enterprise deals converting at 48.8%.
+
+Why It Matters:
+
+Longer cycles tie up sales capacity
+Lost $45K deals hurt more than lost $8K deals
+"Middle child" problem — not getting enough attention
+Actions It Could Drive:
+
+Deal-size-specific sales playbooks
+Earlier executive involvement for Large deals
+Win/loss analysis on recent Large deal failures
+Insight 3: Sales Rep Performance Variance is Growing
+What We Found: Gap between top and bottom performers WIDENED by 58% (from 10.9pp to 17.3pp).
+
+Why It Matters:
+
+Bottom performers win nearly half as often as top performers
+Improving bottom performers = 15-20 additional deals/quarter
+Lowest-effort, highest-impact opportunity
+Actions It Could Drive:
+
+Shadow top performers (especially rep_12)
+Peer mentoring program
+Investigate if bottom performers have systemic disadvantages
