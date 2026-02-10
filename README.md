@@ -116,7 +116,51 @@ The gap between top and bottom performers has **widened dramatically** — from 
 
 ---
 
+---
+
+## Custom Metrics Created
+
+Beyond standard KPIs (Win Rate, Cycle Time), I developed two custom metrics to provide deeper diagnostic power.
+
+### Metric 1: Deal Momentum Decay Index (DMDI)
+
+**Formula:**
+`DMDI = (Current Days in Stage) / (Avg Days for Winning Deals in that Stage)`
+
+**What It Measures:**
+Standard "Time in Stage" is vague. DMDI normalizes this by comparing it to *success*.
+*   **DMDI = 1.0**: Deal is moving at the pace of a winner.
+*   **DMDI > 1.5**: Deal is 50% slower than a typical winning deal (Yellow Flag).
+*   **DMDI > 2.0**: Deal is twice as slow as a winner (Red Flag — likely "Zombie Deal").
+
+**Why It Matters:**
+It separates "patient deals" (complex but healthy) from "stalled deals" (dying). A complex Enterprise deal *should* take longer, so its acceptable "Days in Stage" is higher. DMDI adjusts for this automatically.
+
+**What Action It Drives:**
+*   **Automated Cleanup**: If DMDI > 3.0, auto-move deal to "Nurture" (remove from active pipeline).
+*   **Forecast Accuracy**: Exclude deals with DMDI > 2.0 from the "Commit" forecast.
+
+### Metric 2: Rep-Segment Fit Score (RSFS)
+
+**Formula:**
+`RSFS = (Rep's Win Rate in Segment) / (Team Avg Win Rate in Segment)`
+
+**What It Measures:**
+It quantifies a salesperson's specific advantage in a niche (e.g., selling "Healthcare" or "Enterprise").
+*   **RSFS > 1.2**: Rep is a "Specialist" (20% better than peers).
+*   **RSFS < 0.8**: Rep is "Misaligned" (20% worse than peers).
+
+**Why It Matters:**
+Win rates are often an average of "Great at X" and "Terrible at Y." This metric uncovers hidden super-powers or blind spots. `rep_12` might be average overall but has an RSFS of 1.8 in the Financial sector.
+
+**What Action It Drives:**
+*   **Smart Routing**: Route new Financial leads *only* to reps with Financial RSFS > 1.1.
+*   **Strategic Hiring**: If we want to grow the Healthcare vertical, hire profiles similar to reps with high Healthcare RSFS.
+
+---
+
 ## Summary: Priority Matrix for CRO Action
+
 
 | Insight | Business Impact | Implementation Effort | Priority |
 |---------|----------------|----------------------|----------|
