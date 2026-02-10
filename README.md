@@ -147,8 +147,8 @@ graph TD
     A --> D[Large $30-60K<br/>Win Rate: 42.9% ❌]
     A --> E[Enterprise $60K+<br/>Win Rate: 48.8% ✅]
     
-    style D fill:#ff9999,stroke:#cc0000
-    style E fill:#99ff99,stroke:#00cc00
+    style D fill:#ff9999,stroke:#cc0000,color:#000000
+    style E fill:#99ff99,stroke:#00cc00,color:#000000
 ```
 
 **Why It Matters:**
@@ -413,8 +413,8 @@ graph TD
     I -->|Yes| J[Continue Monitoring]
     I -->|No| K[Escalate to Leadership]
     
-    style K fill:#ff9999
-    style J fill:#99ff99
+    style K fill:#ff9999,color:#000000
+    style J fill:#99ff99,color:#000000
 ```
 
 ---
@@ -466,8 +466,8 @@ graph LR
     Dash -.->|Feedback| User
     User -.->|Retrain Thresholds| Detect
 
-    style Calc fill:#e1bee7,stroke:#8e24aa
-    style Detect fill:#ffccbc,stroke:#ff5722
+    style Calc fill:#e1bee7,stroke:#8e24aa,color:#000000
+    style Detect fill:#ffccbc,stroke:#ff5722,color:#000000
 ```
 
 ---
