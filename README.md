@@ -13,7 +13,7 @@
 
 ---
 
-## 🚀 How to Run This Project
+##  How to Run This Project
 
 ### Prerequisites
 - Python 3.8+
@@ -170,7 +170,7 @@ graph TD
 
 ---
 
-### 📊 Insight 3: Rep Performance Variance (The Coaching Goldmine)
+### Insight 3: Rep Performance Variance (The Coaching Goldmine)
 
 **What We Found:**
 The gap between top and bottom performers has **widened dramatically**—from 10.9pp to 17.3pp (+58% wider).
@@ -505,7 +505,7 @@ SUGGESTED ACTION:
 
 #### For Sales Managers:
 ```
-📉 PARTNER CHANNEL ALERT
+PARTNER CHANNEL ALERT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 What: Partner win rate dropped 5% this week
 From: 44.5% → 39.3% (new low)
@@ -703,4 +703,3 @@ If the CRO uses my Driver Scorecard to have better conversations with their team
 
 ---
 
-*Analysis prepared using skygeni_sales_data.csv covering 5,000 deals across 18 months (2023-2024)*
