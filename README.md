@@ -3,6 +3,47 @@
 
 ---
 
+## 📌 Quick Navigation
+- [How to Run This Project](#-how-to-run-this-project)
+- [Part 1 – Problem Framing](#part-1--problem-framing-no-code-required)
+- [Part 2 – Data Exploration & Insights](#part-2--data-exploration--insights)
+- [Part 3 – Build a Decision Engine](#part-3--build-a-decision-engine)
+- [Part 4 – Mini System Design](#part-4--mini-system-design)
+- [Part 5 – Reflection](#part-5--reflection-most-important)
+
+---
+
+## 🚀 How to Run This Project
+
+### Prerequisites
+- Python 3.8+
+- Jupyter Notebook
+
+### Installation
+1. Clone the repository
+2. Create a virtual environment (optional but recommended):
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install pandas numpy matplotlib seaborn jupyter
+   # OR
+   pip install -r requirements.txt
+   ```
+
+### Running the Analysis
+1. Launch Jupyter Notebook:
+   ```bash
+   jupyter notebook
+   ```
+2. Open the analysis files:
+   - **`part2_eda_insights.ipynb`**: Exploratory Data Analysis & Insights
+   - **`part3_decision_engine.ipynb`**: Decision Engine Logic
+
+---
+
 ## Part 1 – Problem Framing (No Code Required)
 
 ### The Real Business Problem: The "Silent Bleeder"
