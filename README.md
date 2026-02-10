@@ -256,7 +256,7 @@ Win rates are averages—they hide a rep's strengths and weaknesses. Rep A might
 
 **Formula:**
 ```
-RSFS = (Rep's Win Rate in Segment X) / (Team Avg Win Rate in Segment X)
+RSFS = (Rep's Win Rate in Segment X) / (Rep's Overall Win Rate)
 ```
 
 **Interpretation:**
