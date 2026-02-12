@@ -1,6 +1,10 @@
 # SkyGeni Sales Intelligence Analysis
 *A data-driven approach to diagnosing and fixing sales performance decline*
 
+
+> ** Live Prototype:** I have designed and developed a fully functional dashboard to demonstrate how this system would look in production.  
+> [**View the SkyGeni Dashboard Live Demo**](#) *(Link to deployed dashboard)*
+
 ---
 
 ## 📌 Quick Navigation
