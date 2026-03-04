@@ -227,28 +227,17 @@ Standard "Time in Stage" metrics are useless because they don't account for deal
 
 **Formula:**
 ```
-DMDI = (Current Days in Stage) / (Avg Days for WINNING Deals in that Stage)
+DMDI = (Last Stage Velocity) / (Early Stage Velocity)
 ```
 
 **Interpretation:**
-- **DMDI = 1.0:** Deal is moving at the pace of a winner ✅
-- **DMDI = 1.5:** Deal is 50% slower than typical winners (Yellow Flag ⚠️)
-- **DMDI > 2.0:** Deal is twice as slow as a winner (Red Flag—Likely "Zombie" 🧟)
-
-**Business Value:**
-| DMDI Score | Diagnosis | Action |
-| :--- | :--- | :--- |
-| < 1.0 | Fast-tracking (great!) | Prioritize for close |
-| 1.0 - 1.5 | Normal pace | Continue standard cadence |
-| 1.5 - 2.0 | Slowing down | Manager check-in required |
-| > 2.0 | Zombie deal | Auto-move to "Nurture" (off active pipeline) |
-| > 3.0 | Dead | Archive and post-mortem |
+- **DMDI < 0.8:** Early-stage decay dominant
+- **DMDI = 0.8 - 1.2:** Balanced Decay
+- **DMDI > 1.2:** 	Late-stage decay dominant
 
 **Why This Metric is Novel:**
 Most teams measure absolute days; we're measuring days **relative to success benchmarks**, which adjusts for deal complexity automatically.
 
-**Actionable Use Case:**
-> *"Filter for all deals where DMDI > 2.0. That's your 'Pipeline Cleanup List.' Either re-engage aggressively or archive. This frees up 15-20% of rep capacity."*
 
 ---
 
